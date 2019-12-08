@@ -1,0 +1,41 @@
+#Machine Problem 4: Projectile Motion
+
+import matplotlib.pyplot as plt
+import math
+import numpy as np
+import sys
+
+#Variables
+h = float(input('Enter the initial height of the projectile above the ground in meters: '))
+vo = float(input('Enter the magnitude of the velocity in m/s: '))
+ang = float(input('Enter the angle in degrees with respect to the +𝑥-axis at which the projectile is fired: '))
+ax = float(input('Enter the 𝑥-component of the acceleration in m/s^2: '))
+ay= float(input('Enter the y-component of the acceleration in m/s^2: '))
+
+if ay == 0: #for the error
+    sys.exit('error! there will be no free fall if the acceleration in the y-axis is equal to zero.')
+    
+d = np.sqrt((vo*np.sin(ang))**2 - 4*(1/2*ay)*h) #distance
+       
+tmax = (-vo*np.sin(ang)+d)/ay #final time
+    
+t= np.linspace(0,tmax) #time
+    
+if tmax <= 0:
+    tmax = (-vo*np.sin(ang)-d)/ay
+    
+t= np.linspace(0,tmax) #time
+    
+x = vo*np.cos(ang)*(t) + (1/2)*(ax)*(t)**2 #solving for x actual
+xi= vo*np.cos(ang)*t # solving for x ideal
+y = h+vo*np.sin(ang)*(t) + (1/2)*(ay)*(t)**2 #solving for y
+
+#codes for plotting the Projectile
+plt.title('Problem 4: Projectile Motion')
+plt.xlabel('range')
+plt.ylabel('height')
+plt.grid()
+plt.plot(x,y, label="Actual")
+plt.plot(xi,y,'.r', label="Ideal")
+plt.legend(loc="upper left")
+plt.show()
